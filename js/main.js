@@ -10,6 +10,14 @@ var MOCK_DESCRIPTIONS_SECOND = ['меняет', 'курит', 'поджигае�
 
 var MOCK_DESCRIPTIONS_THIRD = ['профессию', 'трубку', 'Икарус', 'покушать', 'плот'];
 
+var MIN_COMMENTS = 1;
+
+var MAX_COMMENTS = 3;
+
+var MIN_AVATARS = 1;
+
+var MAX_AVATARS = 6;
+
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -28,24 +36,24 @@ function createPhoto(i) {
   photo.url = 'photos/' + i + '.jpg';
   photo.description = MOCK_DESCRIPTIONS_FIRST[getRandomNumber(0, MOCK_DESCRIPTIONS_FIRST.length - 1)] + ' ' + MOCK_DESCRIPTIONS_SECOND[getRandomNumber(0, MOCK_DESCRIPTIONS_SECOND.length - 1)] + ' ' + MOCK_DESCRIPTIONS_THIRD[getRandomNumber(0, MOCK_DESCRIPTIONS_THIRD.length - 1)];
   photo.likes = getRandomNumber(15, 200);
-  photo.comments = createArray(getRandomNumber(1, 3), createComment);
+  photo.comments = createArray(getRandomNumber(MIN_COMMENTS, MAX_COMMENTS), createComment);
   return photo;
 }
 
 function createComment() {
   var comment = {};
-  comment.avatar = 'img/avatar-' + getRandomNumber(1, 6) + '.svg';
+  comment.avatar = 'img/avatar-' + getRandomNumber(MIN_AVATARS, MAX_AVATARS) + '.svg';
   comment.message = MOCK_COMMENTS[getRandomNumber(0, MOCK_COMMENTS.length - 1)];
   comment.name = MOCK_NAMES[getRandomNumber(0, MOCK_NAMES.length - 1)];
   return comment;
 }
 
 function createPhotoElement(photo) {
-  var photoEl = template.cloneNode(true);
-  photoEl.querySelector('.picture__img').src = photo.url;
-  photoEl.querySelector('.picture__comments').textContent = photo.comments.length;
-  photoEl.querySelector('.picture__likes').textContent = photo.likes;
-  return photoEl;
+  var photoElement = template.cloneNode(true);
+  photoElement.querySelector('.picture__img').src = photo.url;
+  photoElement.querySelector('.picture__comments').textContent = photo.comments.length;
+  photoElement.querySelector('.picture__likes').textContent = photo.likes;
+  return photoElement;
 }
 
 function renderPhotos(photos) {
