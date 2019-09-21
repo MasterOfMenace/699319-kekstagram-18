@@ -8,7 +8,7 @@ var MOCK_DESCRIPTIONS_FIRST = ['Иван Васильевич', 'Моя бабу
 
 var MOCK_DESCRIPTIONS_SECOND = ['меняет', 'курит', 'поджигает', 'принес', 'критикует'];
 
-var MOCK_DESCRIPTIONS_THIRD = ['профессию', 'трубку', 'Икарус', 'покушать', 'плот']
+var MOCK_DESCRIPTIONS_THIRD = ['профессию', 'трубку', 'Икарус', 'покушать', 'плот'];
 
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -26,7 +26,7 @@ function createArray(number, func) {
 function createPhoto(i) {
   var photo = {};
   photo.url = 'photos/' + i + '.jpg';
-  photo.description = MOCK_DESCRIPTIONS_FIRST[getRandomNumber(0, MOCK_DESCRIPTIONS_FIRST.length-1)] + ' ' + MOCK_DESCRIPTIONS_SECOND[getRandomNumber(0, MOCK_DESCRIPTIONS_SECOND.length-1)] + ' ' + MOCK_DESCRIPTIONS_THIRD[getRandomNumber(0, MOCK_DESCRIPTIONS_THIRD.length-1)];
+  photo.description = MOCK_DESCRIPTIONS_FIRST[getRandomNumber(0, MOCK_DESCRIPTIONS_FIRST.length - 1)] + ' ' + MOCK_DESCRIPTIONS_SECOND[getRandomNumber(0, MOCK_DESCRIPTIONS_SECOND.length - 1)] + ' ' + MOCK_DESCRIPTIONS_THIRD[getRandomNumber(0, MOCK_DESCRIPTIONS_THIRD.length - 1)];
   photo.likes = getRandomNumber(15, 200);
   photo.comments = createArray(getRandomNumber(1, 3), createComment);
   return photo;
@@ -35,8 +35,8 @@ function createPhoto(i) {
 function createComment() {
   var comment = {};
   comment.avatar = 'img/avatar-' + getRandomNumber(1, 6) + '.svg';
-  comment.message = MOCK_COMMENTS[getRandomNumber(0, MOCK_COMMENTS.length-1)];
-  comment.name = MOCK_NAMES[getRandomNumber(0, MOCK_NAMES.length-1)];
+  comment.message = MOCK_COMMENTS[getRandomNumber(0, MOCK_COMMENTS.length - 1)];
+  comment.name = MOCK_NAMES[getRandomNumber(0, MOCK_NAMES.length - 1)];
   return comment;
 }
 
