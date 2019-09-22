@@ -10,17 +10,20 @@ var MOCK_DESCRIPTIONS_SECOND = ['меняет', 'курит', 'поджигае�
 
 var MOCK_DESCRIPTIONS_THIRD = ['профессию', 'трубку', 'Икарус', 'покушать', 'плот'];
 
-var MIN_COMMENTS = 1;
+var COMMENTS = {
+  MIN: 1,
+  MAX: 3,
+};
 
-var MAX_COMMENTS = 3;
+var AVATARS = {
+  MIN: 1,
+  MAX: 6,
+};
 
-var MIN_AVATARS = 1;
-
-var MAX_AVATARS = 6;
-
-var MIN_LIKES = 15;
-
-var MAX_LIKES = 200;
+var LIKES = {
+  MIN: 15,
+  MAX: 200,
+};
 
 var PHOTOS_COUNT = 25;
 
@@ -41,14 +44,14 @@ function createPhoto(i) {
   var photo = {};
   photo.url = 'photos/' + i + '.jpg';
   photo.description = MOCK_DESCRIPTIONS_FIRST[getRandomNumber(0, MOCK_DESCRIPTIONS_FIRST.length - 1)] + ' ' + MOCK_DESCRIPTIONS_SECOND[getRandomNumber(0, MOCK_DESCRIPTIONS_SECOND.length - 1)] + ' ' + MOCK_DESCRIPTIONS_THIRD[getRandomNumber(0, MOCK_DESCRIPTIONS_THIRD.length - 1)];
-  photo.likes = getRandomNumber(MIN_LIKES, MAX_LIKES);
-  photo.comments = createArray(getRandomNumber(MIN_COMMENTS, MAX_COMMENTS), createComment);
+  photo.likes = getRandomNumber(LIKES.MIN, LIKES.MAX);
+  photo.comments = createArray(getRandomNumber(COMMENTS.MIN, COMMENTS.MAX), createComment);
   return photo;
 }
 
 function createComment() {
   var comment = {};
-  comment.avatar = 'img/avatar-' + getRandomNumber(MIN_AVATARS, MAX_AVATARS) + '.svg';
+  comment.avatar = 'img/avatar-' + getRandomNumber(AVATARS.MIN, AVATARS.MAX) + '.svg';
   comment.message = MOCK_COMMENTS[getRandomNumber(0, MOCK_COMMENTS.length - 1)];
   comment.name = MOCK_NAMES[getRandomNumber(0, MOCK_NAMES.length - 1)];
   return comment;
