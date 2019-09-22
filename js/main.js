@@ -84,7 +84,7 @@ var photosContainer = document.querySelector('.pictures');
 
 renderPhotos(photos);
 
-//отсюда код доп. задания, чтобы не запутатться оставил пока так
+// отсюда код доп. задания, чтобы не запутатться оставил пока так
 
 function showElement(element) {
   document.querySelector(element).classList.remove('hidden');
