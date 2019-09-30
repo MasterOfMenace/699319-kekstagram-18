@@ -84,11 +84,9 @@ var photosContainer = document.querySelector('.pictures');
 
 renderPhotos(photos);
 
-// отсюда код доп. задания, чтобы не запутатться оставил пока так
-
-function showElement(element) {
-  document.querySelector(element).classList.remove('hidden');
-}
+// function showElement(element) {
+//   document.querySelector(element).classList.remove('hidden');
+// } скрыл чтобы не ругался линтер, эту функцию испольлзую для открытия элемента .big-picture
 
 function visuallyHideElement(element) {
   document.querySelector(element).classList.add('visually-hidden');
@@ -122,7 +120,7 @@ function renderComments(photo) {
   commentsList.appendChild(fragment);
 }
 
-showElement('.big-picture');
+// showElement('.big-picture');
 
 var bigImg = document.querySelector('.big-picture__img').getElementsByTagName('img')[0];
 var likesCount = document.querySelector('.likes-count');
@@ -137,3 +135,176 @@ renderComments(photos[0]);
 
 visuallyHideElement('.social__comment-count');
 visuallyHideElement('.comments-loader');
+
+// 4 раздел обработчики
+
+var EFFECTS = {
+  'chrome': 'effects__preview--chrome',
+  'sepia': 'effects__preview--sepia',
+  'marvin': 'effects__preview--marvin',
+  'phobos': 'effects__preview--phobos',
+  'heat': 'effects__preview--heat',
+};
+
+var uploadFile = document.querySelector('#upload-file');
+var uploadImgEditForm = document.querySelector('.img-upload__overlay');
+var uploadCancelButton = document.querySelector('#upload-cancel');
+var imgPreview = document.querySelector('.img-upload__preview').querySelector('img');
+var effectNone = document.querySelector('#effect-none');
+var effectChrome = document.querySelector('#effect-chrome');
+var effectSepia = document.querySelector('#effect-sepia');
+var effectMarvin = document.querySelector('#effect-marvin');
+var effectPhobos = document.querySelector('#effect-phobos');
+var effectHeat = document.querySelector('#effect-heat');
+var effectLevel = document.querySelector('.effect-level');
+
+function changeEffect(evt) {
+  var currentEffect = imgPreview.classList;
+  var newEffect;
+  if (evt.target.value === currentEffect) {
+    return;
+  } else {
+    newEffect = EFFECTS[evt.target.value];
+    imgPreview.classList = '';
+    imgPreview.classList.add(newEffect);
+  }
+}
+
+function resetEffect() {
+  imgPreview.classList = '';
+}
+
+function openEditForm() {
+  uploadImgEditForm.classList.remove('hidden');
+  document.addEventListener('keydown', formEscPressHandler);
+}
+
+function closeEditForm() {
+  uploadImgEditForm.classList.add('hidden');
+  document.removeEventListener('keydown', formEscPressHandler);
+  uploadFile.value = '';
+}
+
+function formEscPressHandler(evt) {
+  if (evt.keyCode === 27) {
+    closeEditForm();
+  }
+}
+
+uploadFile.addEventListener('change', function () {
+  openEditForm();
+});
+
+uploadCancelButton.addEventListener('click', function () {
+  closeEditForm();
+});
+
+effectNone.addEventListener('click', function () {
+  resetEffect();
+  effectLevel.classList.add('hidden');
+});
+
+effectChrome.addEventListener('click', function (evt) {
+  changeEffect(evt);
+  effectLevel.classList.remove('hidden');
+});
+
+effectSepia.addEventListener('click', function (evt) {
+  changeEffect(evt);
+  effectLevel.classList.remove('hidden');
+});
+
+effectMarvin.addEventListener('click', function (evt) {
+  changeEffect(evt);
+  effectLevel.classList.remove('hidden');
+});
+
+effectPhobos.addEventListener('click', function (evt) {
+  changeEffect(evt);
+  effectLevel.classList.remove('hidden');
+});
+
+effectHeat.addEventListener('click', function (evt) {
+  changeEffect(evt);
+  effectLevel.classList.remove('hidden');
+});
+
+// масштабирование картинки
+
+var scaleConrol = document.querySelectorAll('.scale__control');
+var smaller = scaleConrol[0];
+var scaleValue = scaleConrol[1];
+var bigger = scaleConrol[2];
+
+bigger.addEventListener('click', biggerScale);
+
+smaller.addEventListener('click', smallerScale);
+
+function biggerScale() {
+  var currentScale = Number(scaleValue.value.slice(0, -1));
+  var step = 25;
+  currentScale = currentScale + step;
+  if (currentScale <= 100) {
+    scaleValue.value = currentScale + '%';
+    imgPreview.style = 'transform: scale' + '(' + currentScale / 100 + ')';
+  }
+}
+
+function smallerScale() {
+  var currentScale = Number(scaleValue.value.slice(0, -1));
+  var step = 25;
+  currentScale = currentScale - step;
+  if (currentScale >= 25) {
+    scaleValue.value = currentScale + '%';
+    imgPreview.style = 'transform: scale' + '(' + currentScale / 100 + ')';
+  }
+}
+
+// валидация хэштегов
+
+var hashtagsInput = document.querySelector('.text__hashtags');
+hashtagsInput.addEventListener('change', validationHashtags);
+hashtagsInput.addEventListener('focus', function () {
+  document.removeEventListener('keydown', formEscPressHandler);
+});
+hashtagsInput.addEventListener('blur', function () {
+  document.addEventListener('keydown', formEscPressHandler);
+});
+
+function validationHashtags() {
+  var hashtags = hashtagsInput.value.split(' ').map(function (elem) {
+    return elem.toLowerCase();
+  });
+
+  for (var i = 0; i < hashtags.length; i++) {
+    var firstToken = hashtags[i][0];
+    var inkr = i + 1;
+    if (firstToken !== '#') {
+      hashtagsInput.setCustomValidity('Хэштег должен начинаться с #');
+    } else if (firstToken === '#' && hashtags[i].length === 1) {
+      hashtagsInput.setCustomValidity('Хэштег не может состоять из одной решетки');
+    } else if (hashtags[i].length > 20) {
+      hashtagsInput.setCustomValidity('Хэштег не иожет быть длиннее 20 символов, включая решетку');
+    } else if (hashtags.length > 5) {
+      hashtagsInput.setCustomValidity('не более 5 хэштегов');
+    } else if (hashtags.indexOf(hashtags[i], inkr) !== -1) {
+      hashtagsInput.setCustomValidity('Хэштеги не могут повторяться');
+      break; // если не выйти из цикла, то при проходе до конца скидывается setCustomValidity
+    } else if (hashtags[i].indexOf('#', 1) !== -1) {
+      hashtagsInput.setCustomValidity('Хэштеги должны разделяться пробелом');
+      break; // если не выйти из цикла, то при проходе до конца скидывается setCustomValidity
+    } else {
+      hashtagsInput.setCustomValidity('');
+    }
+  }
+}
+
+// обработчики на textarea с комментариями
+
+var commentsInput = document.querySelector('.text__description');
+commentsInput.addEventListener('focus', function () {
+  document.removeEventListener('keydown', formEscPressHandler);
+});
+commentsInput.addEventListener('blur', function () {
+  document.addEventListener('keydown', formEscPressHandler);
+});
