@@ -27,6 +27,11 @@ var LIKES = {
 
 var PHOTOS_COUNT = 25;
 
+var KEY_CODE = {
+  ESC: 27,
+  ENTER: 13,
+};
+
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -163,11 +168,11 @@ function changeEffect(evt) {
   var newEffect;
   if (evt.target.value === currentEffect) {
     return;
-  } else {
-    newEffect = EFFECTS[evt.target.value];
-    imgPreview.classList = '';
-    imgPreview.classList.add(newEffect);
   }
+
+  newEffect = EFFECTS[evt.target.value];
+  imgPreview.classList = '';
+  imgPreview.classList.add(newEffect);
 }
 
 function resetEffect() {
@@ -186,7 +191,7 @@ function closeEditForm() {
 }
 
 function formEscPressHandler(evt) {
-  if (evt.keyCode === 27) {
+  if (evt.keyCode === KEY_CODE.ESC) {
     closeEditForm();
   }
 }
@@ -231,6 +236,11 @@ effectHeat.addEventListener('click', function (evt) {
 
 // масштабирование картинки
 
+var SCALE_OPTIONS = {
+  MIN_SCALE: 25,
+  MAX_SCALE: 100,
+  SCALE_STEP: 25,
+}
 var scaleConrol = document.querySelectorAll('.scale__control');
 var smaller = scaleConrol[0];
 var scaleValue = scaleConrol[1];
@@ -242,9 +252,9 @@ smaller.addEventListener('click', smallerScale);
 
 function biggerScale() {
   var currentScale = Number(scaleValue.value.slice(0, -1));
-  var step = 25;
+  var step = SCALE_OPTIONS.SCALE_STEP;
   currentScale = currentScale + step;
-  if (currentScale <= 100) {
+  if (currentScale <= SCALE_OPTIONS.MAX_SCALE) {
     scaleValue.value = currentScale + '%';
     imgPreview.style = 'transform: scale' + '(' + currentScale / 100 + ')';
   }
@@ -252,9 +262,9 @@ function biggerScale() {
 
 function smallerScale() {
   var currentScale = Number(scaleValue.value.slice(0, -1));
-  var step = 25;
+  var step = SCALE_OPTIONS.SCALE_STEP;
   currentScale = currentScale - step;
-  if (currentScale >= 25) {
+  if (currentScale >= SCALE_OPTIONS.MIN_SCALE) {
     scaleValue.value = currentScale + '%';
     imgPreview.style = 'transform: scale' + '(' + currentScale / 100 + ')';
   }
@@ -262,6 +272,10 @@ function smallerScale() {
 
 // валидация хэштегов
 
+var HASHTAGS_OPTIONS = {
+  MAX_QAUNTITY: 5,
+  MAX_LENGTH: 20
+}
 var hashtagsInput = document.querySelector('.text__hashtags');
 hashtagsInput.addEventListener('change', validationHashtags);
 hashtagsInput.addEventListener('focus', function () {
@@ -283,9 +297,9 @@ function validationHashtags() {
       hashtagsInput.setCustomValidity('Хэштег должен начинаться с #');
     } else if (firstToken === '#' && hashtags[i].length === 1) {
       hashtagsInput.setCustomValidity('Хэштег не может состоять из одной решетки');
-    } else if (hashtags[i].length > 20) {
+    } else if (hashtags[i].length > HASHTAGS_OPTIONS.MAX_LENGTH) {
       hashtagsInput.setCustomValidity('Хэштег не иожет быть длиннее 20 символов, включая решетку');
-    } else if (hashtags.length > 5) {
+    } else if (hashtags.length > HASHTAGS_OPTIONS.MAX_QAUNTITY) {
       hashtagsInput.setCustomValidity('не более 5 хэштегов');
     } else if (hashtags.indexOf(hashtags[i], inkr) !== -1) {
       hashtagsInput.setCustomValidity('Хэштеги не могут повторяться');
