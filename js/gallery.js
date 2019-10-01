@@ -28,11 +28,6 @@
 
   var PHOTOS_COUNT = 25;
 
-  // var KEY_CODE = {
-  //   ESC: 27,
-  //   ENTER: 13,
-  // };
-
   function getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
