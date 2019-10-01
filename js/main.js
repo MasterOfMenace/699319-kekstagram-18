@@ -290,7 +290,10 @@ hashtagsInput.addEventListener('blur', function () {
 function validationHashtags() {
   var hashtags = hashtagsInput.value.split(' ').map(function (elem) {
     return elem.toLowerCase();
+  }).filter(function (elem) {
+    return elem !== '';
   });
+  hashtagsInput.value = hashtags.join(' ');
 
   for (var i = 0; i < hashtags.length; i++) {
     var firstToken = hashtags[i][0];
