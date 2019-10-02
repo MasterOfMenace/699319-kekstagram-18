@@ -14,6 +14,10 @@ window.util = (function () {
     document.querySelector(element).classList.add(style);
   }
 
+  function getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
   return {
     isEscEvent: function (evt, action) {
       if (evt.keyCode === KEY_CODE.ESC) {
@@ -26,6 +30,7 @@ window.util = (function () {
       }
     },
     showElement: showElement,
-    hideElement: hideElement
+    hideElement: hideElement,
+    getRandomNumber: getRandomNumber,
   };
 })();
