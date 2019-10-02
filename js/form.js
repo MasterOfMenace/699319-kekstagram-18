@@ -9,6 +9,17 @@
     'heat': 'effects__preview--heat',
   };
 
+  var SCALE_OPTIONS = {
+    MIN_SCALE: 25,
+    MAX_SCALE: 100,
+    SCALE_STEP: 25,
+  };
+
+  var HASHTAGS_OPTIONS = {
+    MAX_QAUNTITY: 5,
+    MAX_LENGTH: 20,
+  };
+
   var uploadFile = document.querySelector('#upload-file');
   var uploadImgEditForm = document.querySelector('.img-upload__overlay');
   var uploadCancelButton = document.querySelector('#upload-cancel');
@@ -91,13 +102,6 @@
   });
 
   // масштабирование картинки
-
-  var SCALE_OPTIONS = {
-    MIN_SCALE: 25,
-    MAX_SCALE: 100,
-    SCALE_STEP: 25,
-  };
-
   var scaleConrol = document.querySelectorAll('.scale__control');
   var smaller = scaleConrol[0];
   var scaleValue = scaleConrol[1];
@@ -128,11 +132,6 @@
   }
 
   // валидация хэштегов
-
-  var HASHTAGS_OPTIONS = {
-    MAX_QAUNTITY: 5,
-    MAX_LENGTH: 20,
-  };
 
   var hashtagsInput = document.querySelector('.text__hashtags');
   hashtagsInput.addEventListener('change', validationHashtags);
