@@ -3,7 +3,6 @@
 (function () {
   window.picture.renderPhotos(window.data.photos);
 
-  // window.util.showElement('.big-picture');
   window.preview.renderBigPhoto(window.data.photos[0]);
   window.preview.renderComments(window.data.photos[0]);
 

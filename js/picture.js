@@ -1,8 +1,6 @@
 'use strict';
 
 window.picture = (function () {
-  // создает миниатюру
-
   var template = document.querySelector('#picture').content.querySelector('.picture');
 
   var photosContainer = document.querySelector('.pictures');
@@ -15,7 +13,6 @@ window.picture = (function () {
     return photoElement;
   }
 
-  // отрисовывает миниатюры
   function renderPhotos(photos) {
     var fragment = document.createDocumentFragment();
 
@@ -27,10 +24,7 @@ window.picture = (function () {
     photosContainer.appendChild(fragment);
   }
 
-  // renderPhotos(window.data.photos);
-
   return {
     renderPhotos: renderPhotos,
   };
-
 })();

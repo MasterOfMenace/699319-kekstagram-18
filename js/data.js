@@ -11,23 +11,6 @@ window.data = (function () {
 
   var MOCK_DESCRIPTIONS_THIRD = ['профессию', 'трубку', 'Икарус', 'покушать', 'плот'];
 
-  // var COMMENTS = {
-  //   MIN: 1,
-  //   MAX: 3,
-  // };
-
-  // var AVATARS = {
-  //   MIN: 1,
-  //   MAX: 6,
-  // };
-
-  // var LIKES = {
-  //   MIN: 15,
-  //   MAX: 200,
-  // };
-
-  // var PHOTOS_COUNT = 25;
-
   function createArray(number, func) {
     var array = [];
     for (var i = 1; i <= number; i++) {
@@ -46,7 +29,6 @@ window.data = (function () {
     return photo;
   }
 
-  // создает комментарий
   function createComment() {
     var comment = {};
     comment.avatar = 'img/avatar-' + window.util.getRandomNumber(window.rules.AVATARS.MIN, window.rules.AVATARS.MAX) + '.svg';
