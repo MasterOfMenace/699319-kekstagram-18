@@ -1,6 +1,8 @@
 'use strict';
 
 window.backend = (function () {
+  var XHR_SUCCESS_STATUS = 200;
+
   function load(onSucess, onError) {
     var URL = 'https://js.dump.academy/kekstagram/data';
 
@@ -10,7 +12,7 @@ window.backend = (function () {
     xhr.open('GET', URL);
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
+      if (xhr.status === XHR_SUCCESS_STATUS) {
         onSucess(xhr.response);
       } else {
         onError('Статус ответа ' + xhr.status + xhr.statusText);
