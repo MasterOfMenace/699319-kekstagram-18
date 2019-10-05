@@ -23,6 +23,11 @@ window.picture = (function () {
     photosContainer.appendChild(fragment);
   }
 
+  function onSuccess(data) {
+    window.photos = data;
+    renderPhotos(data);
+  }
+
   function renderError(message) {
     var errorTemplate = document.querySelector('#error').content.querySelector('.error');
     var main = document.querySelector('main');
@@ -32,7 +37,7 @@ window.picture = (function () {
   }
 
   return {
-    renderPhotos: renderPhotos,
+    onSuccess: onSuccess,
     renderError: renderError,
   };
 })();
