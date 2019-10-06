@@ -3,13 +3,11 @@
 window.backend = (function () {
   var XHR_SUCCESS_STATUS = 200;
 
-  function load(onSucess, onError) {
-    var URL = 'https://js.dump.academy/kekstagram/data';
-
+  function load(url, onSucess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
-    xhr.open('GET', URL);
+    xhr.open('GET', url);
 
     xhr.addEventListener('load', function () {
       if (xhr.status === XHR_SUCCESS_STATUS) {
