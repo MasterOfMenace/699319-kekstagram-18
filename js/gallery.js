@@ -11,7 +11,7 @@
     var index = Array.prototype.indexOf.call(parent.children, elem) - NOT_PICTURES_NODES;
     window.preview.renderBigPhoto(window.photos[index]);
     window.preview.renderComments(window.photos[index]);
-}
+  }
 
   function pictureClickHandler(evt) {
     if (evt.target.className === 'picture__img') {
