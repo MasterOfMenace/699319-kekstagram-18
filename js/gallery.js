@@ -6,13 +6,17 @@
   var picturesContainer = document.querySelector('.pictures');
   var previewCloseButton = document.querySelector('#picture-cancel');
 
+  function renderPreview(elem) {
+    var parent = elem.parentNode;
+    var index = Array.prototype.indexOf.call(parent.children, elem) - NOT_PICTURES_NODES;
+    window.preview.renderBigPhoto(window.photos[index]);
+    window.preview.renderComments(window.photos[index]);
+}
+
   function pictureClickHandler(evt) {
     if (evt.target.className === 'picture__img') {
       var child = evt.target.parentNode;
-      var parent = child.parentNode;
-      var index = Array.prototype.indexOf.call(parent.children, child) - NOT_PICTURES_NODES;
-      window.preview.renderBigPhoto(window.photos[index]);
-      window.preview.renderComments(window.photos[index]);
+      renderPreview(child);
     }
   }
 
@@ -20,10 +24,7 @@
     window.util.isEnterEvent(evt, function () {
       if (evt.target.className === 'picture') {
         var child = evt.target;
-        var parent = child.parentNode;
-        var index = Array.prototype.indexOf.call(parent.children, child) - NOT_PICTURES_NODES;
-        window.preview.renderBigPhoto(window.photos[index]);
-        window.preview.renderComments(window.photos[index]);
+        renderPreview(child);
       }
     });
   }
