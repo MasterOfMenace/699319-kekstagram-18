@@ -26,7 +26,7 @@ window.util = (function () {
     },
     isEnterEvent: function (evt, action) {
       if (evt.keyCode === KEY_CODE.ENTER) {
-        action();
+        action(evt);
       }
     },
     showElement: showElement,
