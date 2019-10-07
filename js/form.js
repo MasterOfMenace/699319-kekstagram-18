@@ -64,7 +64,6 @@
   function closeEditForm() {
     uploadImgEditForm.classList.add('hidden');
     document.removeEventListener('keydown', formEscPressHandler);
-    // uploadFile.value = '';
     resetForm();
   }
 
