@@ -20,6 +20,7 @@
     MAX_LENGTH: 20,
   };
 
+  var form = document.querySelector('.img-upload__form');
   var uploadFile = document.querySelector('#upload-file');
   var uploadImgEditForm = document.querySelector('.img-upload__overlay');
   var uploadCancelButton = document.querySelector('#upload-cancel');
@@ -48,6 +49,13 @@
     imgPreview.classList = '';
   }
 
+  function resetForm() {
+    resetEffect();
+    commentsInput.value = '';
+    hashtagsInput.value = '';
+    uploadFile.value = '';
+  }
+
   function openEditForm() {
     uploadImgEditForm.classList.remove('hidden');
     document.addEventListener('keydown', formEscPressHandler);
@@ -56,7 +64,8 @@
   function closeEditForm() {
     uploadImgEditForm.classList.add('hidden');
     document.removeEventListener('keydown', formEscPressHandler);
-    uploadFile.value = '';
+    // uploadFile.value = '';
+    resetForm();
   }
 
   function formEscPressHandler(evt) {
@@ -183,4 +192,54 @@
     document.addEventListener('keydown', formEscPressHandler);
   });
 
+  // отправка формы
+
+  function renderMessage(id, message) {
+    var style = id.replace('#', '.');
+    var template = document.querySelector(id).content.querySelector(style);
+    var node = template.cloneNode(true);
+    var main = document.querySelector('main');
+    var button = node.querySelector(style + '__button');
+
+    function escPressHandler(evt) {
+      window.util.isEscEvent(evt, removeMessage);
+    }
+
+    function removeMessage() {
+      main.removeChild(node);
+      document.removeEventListener('keydown', escPressHandler);
+    }
+
+    button.addEventListener('click', removeMessage);
+    document.addEventListener('keydown', escPressHandler);
+    node.addEventListener('click', function (evt) {
+      if (evt.target === node) {
+        removeMessage();
+      }
+    });
+
+    if (message) {
+      var nodeInner = node.querySelector(style + '__inner');
+      var p = document.createElement('p');
+      p.textContent = message;
+      nodeInner.appendChild(p);
+    }
+    main.appendChild(node);
+  }
+
+  function onSuccess() {
+    closeEditForm();
+    renderMessage('#success');
+  }
+
+  function onError(message) {
+    closeEditForm();
+    renderMessage('#error', message);
+  }
+
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+
+    window.backend.upload('https://js.dump.academy/kekstagram', new FormData(form), onSuccess, onError);
+  });
 })();
