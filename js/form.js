@@ -200,17 +200,17 @@
     var main = document.querySelector('main');
     var button = node.querySelector(style + '__button');
 
-    function escPressHandler(evt) {
+    function messageEscPressHandler(evt) {
       window.util.isEscEvent(evt, removeMessage);
     }
 
     function removeMessage() {
       main.removeChild(node);
-      document.removeEventListener('keydown', escPressHandler);
+      document.removeEventListener('keydown', messageEscPressHandler);
     }
 
     button.addEventListener('click', removeMessage);
-    document.addEventListener('keydown', escPressHandler);
+    document.addEventListener('keydown', messageEscPressHandler);
     node.addEventListener('click', function (evt) {
       if (evt.target === node) {
         removeMessage();

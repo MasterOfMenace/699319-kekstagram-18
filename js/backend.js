@@ -3,7 +3,7 @@
 window.backend = (function () {
   var XHR_SUCCESS_STATUS = 200;
 
-  function download(url, onSucess, onError) {
+  function load(url, onSucess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -36,7 +36,7 @@ window.backend = (function () {
   }
 
   return {
-    download: download,
+    load: load,
     upload: upload,
   };
 })();
