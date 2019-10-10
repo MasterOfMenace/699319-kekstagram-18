@@ -117,21 +117,38 @@
   });
 
   // изменение глубины эффекта
+  var MAX_BLUR_VALUE = 3;
+  var BRIGHTNESS = {
+    MIN: 1,
+    MAX: 3,
+  };
+
   var pin = effectLevel.querySelector('.effect-level__pin');
   var line = effectLevel.querySelector('.effect-level__line');
   var depth = effectLevel.querySelector('.effect-level__depth');
   var effectValue = effectLevel.querySelector('.effect-level__value');
+
+  function calculateEffectValue(percent) {
+    var effect = imgPreview.classList.value;
+    if (effect === EFFECTS['chrome']) {
+      imgPreview.style.filter = 'grayscale(' + percent / 100 + ')';
+    } else if (effect === EFFECTS['sepia']) {
+      imgPreview.style.filter = 'sepia(' + percent / 100 + ')';
+    } else if (effect === EFFECTS['marvin']) {
+      imgPreview.style.filter = 'invert(' + percent + '%)';
+    } else if (effect === EFFECTS['phobos']) {
+      imgPreview.style.filter = 'blur(' + MAX_BLUR_VALUE * percent / 100 + 'px)';
+    } else if (effect === EFFECTS['heat']) {
+      var brightnessValue = percent / 100 * (BRIGHTNESS.MAX - BRIGHTNESS.MIN) + BRIGHTNESS.MIN;
+      imgPreview.style.filter = 'brightness(' + brightnessValue + ')';
+    }
+  }
+
   pin.addEventListener('mousedown', function (evt) {
     var start = evt.clientX;
 
     function onMouseMove(moveEvt) {
       moveEvt.preventDefault();
-
-      var MAX_BLUR_VALUE = 3;
-      var BRIGHTNESS = {
-        MIN: 1,
-        MAX: 3,
-      };
 
       var shift = start - moveEvt.clientX;
       start = moveEvt.clientX;
@@ -146,19 +163,7 @@
       var percent = Math.floor(newLeft * 100 / line.offsetWidth);
       depth.style.width = percent + '%';
       effectValue.value = percent;
-      var effect = imgPreview.classList.value;
-      if (effect === EFFECTS['chrome']) {
-        imgPreview.style.filter = 'grayscale(' + percent / 100 + ')';
-      } else if (effect === EFFECTS['sepia']) {
-        imgPreview.style.filter = 'sepia(' + percent / 100 + ')';
-      } else if (effect === EFFECTS['marvin']) {
-        imgPreview.style.filter = 'invert(' + percent + '%)';
-      } else if (effect === EFFECTS['phobos']) {
-        imgPreview.style.filter = 'blur(' + MAX_BLUR_VALUE * percent / 100 + 'px)';
-      } else if (effect === EFFECTS['heat']) {
-        var brightnessValue = percent / 100 * (BRIGHTNESS.MAX - BRIGHTNESS.MIN) + BRIGHTNESS.MIN;
-        imgPreview.style.filter = 'brightness(' + brightnessValue + ')';
-      }
+      calculateEffectValue(percent);
     }
 
     function onMouseUp(upEvt) {
