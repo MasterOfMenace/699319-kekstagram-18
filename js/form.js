@@ -42,11 +42,16 @@
 
     newEffect = EFFECTS[evt.target.value];
     imgPreview.classList = '';
+    imgPreview.style.filter = '';
     imgPreview.classList.add(newEffect);
+    // установка пина на 100%
+    pin.style.left = line.offsetWidth + 'px';
+    depth.style.width = 100 + '%';
   }
 
   function resetEffect() {
     imgPreview.classList = '';
+    imgPreview.style.filter = '';
   }
 
   function resetForm() {
@@ -58,6 +63,8 @@
 
   function openEditForm() {
     uploadImgEditForm.classList.remove('hidden');
+    effectLevel.classList.add('hidden');
+
     document.addEventListener('keydown', formEscPressHandler);
   }
 
@@ -80,33 +87,92 @@
   });
 
   effectNone.addEventListener('click', function () {
-    resetEffect();
     effectLevel.classList.add('hidden');
+    resetEffect();
   });
 
   effectChrome.addEventListener('click', function (evt) {
-    changeEffect(evt);
     effectLevel.classList.remove('hidden');
+    changeEffect(evt);
   });
 
   effectSepia.addEventListener('click', function (evt) {
-    changeEffect(evt);
     effectLevel.classList.remove('hidden');
+    changeEffect(evt);
   });
 
   effectMarvin.addEventListener('click', function (evt) {
-    changeEffect(evt);
     effectLevel.classList.remove('hidden');
+    changeEffect(evt);
   });
 
   effectPhobos.addEventListener('click', function (evt) {
-    changeEffect(evt);
     effectLevel.classList.remove('hidden');
+    changeEffect(evt);
   });
 
   effectHeat.addEventListener('click', function (evt) {
-    changeEffect(evt);
     effectLevel.classList.remove('hidden');
+    changeEffect(evt);
+  });
+
+  // изменение глубины эффекта
+  var MAX_BLUR_VALUE = 3;
+  var BRIGHTNESS = {
+    MIN: 1,
+    MAX: 3,
+  };
+
+  var pin = effectLevel.querySelector('.effect-level__pin');
+  var line = effectLevel.querySelector('.effect-level__line');
+  var depth = effectLevel.querySelector('.effect-level__depth');
+  var effectValue = effectLevel.querySelector('.effect-level__value');
+
+  function calculateEffectValue(percent) {
+    var effect = imgPreview.classList.value;
+    if (effect === EFFECTS['chrome']) {
+      imgPreview.style.filter = 'grayscale(' + percent / 100 + ')';
+    } else if (effect === EFFECTS['sepia']) {
+      imgPreview.style.filter = 'sepia(' + percent / 100 + ')';
+    } else if (effect === EFFECTS['marvin']) {
+      imgPreview.style.filter = 'invert(' + percent + '%)';
+    } else if (effect === EFFECTS['phobos']) {
+      imgPreview.style.filter = 'blur(' + MAX_BLUR_VALUE * percent / 100 + 'px)';
+    } else if (effect === EFFECTS['heat']) {
+      var brightnessValue = percent / 100 * (BRIGHTNESS.MAX - BRIGHTNESS.MIN) + BRIGHTNESS.MIN;
+      imgPreview.style.filter = 'brightness(' + brightnessValue + ')';
+    }
+  }
+
+  pin.addEventListener('mousedown', function (evt) {
+    var start = evt.clientX;
+
+    function onMouseMove(moveEvt) {
+      moveEvt.preventDefault();
+
+      var shift = start - moveEvt.clientX;
+      start = moveEvt.clientX;
+
+      var newLeft = pin.offsetLeft - shift;
+      if (newLeft < 0) {
+        newLeft = 0;
+      } else if (newLeft > line.offsetWidth) {
+        newLeft = line.offsetWidth;
+      }
+      pin.style.left = newLeft + 'px';
+      var percent = Math.floor(newLeft * 100 / line.offsetWidth);
+      depth.style.width = percent + '%';
+      effectValue.value = percent;
+      calculateEffectValue(percent);
+    }
+
+    function onMouseUp(upEvt) {
+      upEvt.preventDefault();
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    }
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
   });
 
   // масштабирование картинки
