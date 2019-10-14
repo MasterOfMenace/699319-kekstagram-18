@@ -30,8 +30,8 @@
   }
 
   window.backend.load('https://js.dump.academy/kekstagram/data', window.picture.onSuccess, window.picture.renderError);
-  window.util.hideElement('.social__comment-count', 'visually-hidden');
-  window.util.hideElement('.comments-loader', 'visually-hidden');
+  // window.util.hideElement('.social__comment-count', 'visually-hidden');
+  // window.util.hideElement('.comments-loader', 'visually-hidden');
 
   picturesContainer.addEventListener('click', pictureClickHandler);
   picturesContainer.addEventListener('keydown', pictureEnterPressHandler);
