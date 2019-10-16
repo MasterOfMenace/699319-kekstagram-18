@@ -18,6 +18,17 @@ window.util = (function () {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
+  function shuffleArray(array, number) {
+    var inputArray = array.slice();
+    var outputArray = [];
+    for (var i = 0; i < number; i++) {
+      var index = Math.floor(Math.random() * inputArray.length);
+      outputArray.push(inputArray[index]);
+      inputArray.splice(index, 1);
+    }
+    return outputArray;
+  }
+
   return {
     isEscEvent: function (evt, action) {
       if (evt.keyCode === KEY_CODE.ESC) {
@@ -32,5 +43,6 @@ window.util = (function () {
     showElement: showElement,
     hideElement: hideElement,
     getRandomNumber: getRandomNumber,
+    shuffleArray: shuffleArray,
   };
 })();
