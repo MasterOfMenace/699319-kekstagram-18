@@ -1,6 +1,7 @@
 'use strict';
 
 window.util = (function () {
+  var DEBOUNCE_INTERVAL = 300;
   var KEY_CODE = {
     ESC: 27,
     ENTER: 13,
@@ -29,23 +30,19 @@ window.util = (function () {
     return outputArray;
   }
 
-  (function () {
-    var DEBOUNCE_INTERVAL = 300; // ms
+  window.debounce = function (cb) {
+    var lastTimeout = null;
 
-    window.debounce = function (cb) {
-      var lastTimeout = null;
-
-      return function() {
-        var parameters = arguments;
-        if (lastTimeout) {
-          window.clearTimeout(lastTimeout);
-        }
-        lastTimeout = window.setTimeout(function() {
-          cb.apply(null, parameters);
-        }, DEBOUNCE_INTERVAL);
-      };
+    return function () {
+      var parameters = arguments;
+      if (lastTimeout) {
+        window.clearTimeout(lastTimeout);
+      }
+      lastTimeout = window.setTimeout(function () {
+        cb.apply(null, parameters);
+      }, DEBOUNCE_INTERVAL);
     };
-  })();
+  };
 
   return {
     isEscEvent: function (evt, action) {
@@ -62,6 +59,5 @@ window.util = (function () {
     hideElement: hideElement,
     getRandomNumber: getRandomNumber,
     shuffleArray: shuffleArray,
-    // debounce: debounce,
   };
 })();

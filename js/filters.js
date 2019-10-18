@@ -29,18 +29,6 @@
 
   }
 
-  function randomButtonClickHandlerWithDebounce() {
-    window.debounce(randomButtonClickHandler);
-  }
-
-  function popularButtonClickHandlerWithDebounce() {
-    window.debounce(popularButtonClickHandler);
-  }
-
-  function discussedButtonClickHandlerWithDebounce() {
-    window.debounce(discussedButtonClickHandler);
-  }
-
   function popularButtonClickHandler(evt) {
     clearPicturesContainer();
     window.picture.renderPhotos(window.photos);
@@ -57,6 +45,13 @@
     removeButtonActiveClass();
     evt.target.classList.add('img-filters__button--active');
   }
+
+  var randomButtonClickHandlerWithDebounce = window.debounce(randomButtonClickHandler);
+
+  var popularButtonClickHandlerWithDebounce = window.debounce(popularButtonClickHandler);
+
+  var discussedButtonClickHandlerWithDebounce = window.debounce(discussedButtonClickHandler);
+
 
   random.addEventListener('click', randomButtonClickHandlerWithDebounce);
   popular.addEventListener('click', popularButtonClickHandlerWithDebounce);
