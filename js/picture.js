@@ -2,6 +2,7 @@
 
 window.picture = (function () {
   var photosContainer = document.querySelector('.pictures');
+  var filters = document.querySelector('.img-filters');
 
   function createPhotoElement(photo) {
     var template = document.querySelector('#picture').content.querySelector('.picture');
@@ -25,6 +26,7 @@ window.picture = (function () {
 
   function onSuccess(data) {
     window.photos = data;
+    filters.classList.remove('img-filters--inactive');
     renderPhotos(data);
   }
 
@@ -39,5 +41,6 @@ window.picture = (function () {
   return {
     onSuccess: onSuccess,
     renderError: renderError,
+    renderPhotos: renderPhotos,
   };
 })();
