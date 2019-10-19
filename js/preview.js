@@ -19,7 +19,7 @@ window.preview = (function () {
     document.removeEventListener('keydown', previewEscPressHandler);
     commentsList.innerHTML = '';
     commentsLoadButton.classList.remove('visually-hidden');
-    commentsCount = null;
+    commentsCount = 0;
   }
 
   function previewEscPressHandler(evt) {

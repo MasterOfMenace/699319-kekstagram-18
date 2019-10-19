@@ -59,6 +59,7 @@
     commentsInput.value = '';
     hashtagsInput.value = '';
     uploadFile.value = '';
+    imgPreview.style = '';
   }
 
   function openEditForm() {
