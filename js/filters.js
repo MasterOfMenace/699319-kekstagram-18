@@ -7,6 +7,8 @@
   var popular = filters.querySelector('#filter-popular');
   var random = filters.querySelector('#filter-random');
   var discussed = filters.querySelector('#filter-discussed');
+  // var shuffledData;
+  // var randomData;
 
   function clearPicturesContainer() {
     var pictures = photosContainer.querySelectorAll('.picture');
@@ -20,30 +22,29 @@
     activeButton.classList.remove('img-filters__button--active');
   }
 
-  function randomButtonClickHandler(evt) {
+  function filterPictures(evt, data) {
     clearPicturesContainer();
-    var shuffled = window.util.shuffleArray(window.photos.slice(), RANDOM_PHOTOS_COUNT);
-    window.picture.renderPhotos(shuffled);
+    window.picture.renderPhotos(data);
     removeButtonActiveClass();
     evt.target.classList.add('img-filters__button--active');
+  }
 
+  function randomButtonClickHandler(evt) {
+    var shuffled = window.util.shuffleArray(window.photos.slice(), RANDOM_PHOTOS_COUNT);
+    window.photosData = shuffled;
+    filterPictures(evt, shuffled);
   }
 
   function popularButtonClickHandler(evt) {
-    clearPicturesContainer();
-    window.picture.renderPhotos(window.photos);
-    removeButtonActiveClass();
-    evt.target.classList.add('img-filters__button--active');
+    filterPictures(evt, window.photos);
   }
 
   function discussedButtonClickHandler(evt) {
-    clearPicturesContainer();
     var sorted = window.photos.slice().sort(function (a, b) {
       return b.comments.length - a.comments.length;
     });
-    window.picture.renderPhotos(sorted);
-    removeButtonActiveClass();
-    evt.target.classList.add('img-filters__button--active');
+    window.photosData = sorted;
+    filterPictures(evt, sorted);
   }
 
   var randomButtonClickHandlerWithDebounce = window.debounce(randomButtonClickHandler);
@@ -52,8 +53,15 @@
 
   var discussedButtonClickHandlerWithDebounce = window.debounce(discussedButtonClickHandler);
 
-
-  random.addEventListener('click', randomButtonClickHandlerWithDebounce);
-  popular.addEventListener('click', popularButtonClickHandlerWithDebounce);
-  discussed.addEventListener('click', discussedButtonClickHandlerWithDebounce);
+  filters.addEventListener('click', function (evt) {
+    if (evt.target === random) {
+      randomButtonClickHandlerWithDebounce(evt);
+    }
+    if (evt.target === popular) {
+      popularButtonClickHandlerWithDebounce(evt);
+    }
+    if (evt.target === discussed) {
+      discussedButtonClickHandlerWithDebounce(evt);
+    }
+  });
 })();

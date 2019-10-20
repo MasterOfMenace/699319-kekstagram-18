@@ -1,7 +1,7 @@
 'use strict';
 
 window.util = (function () {
-  var DEBOUNCE_INTERVAL = 300;
+  var DEBOUNCE_INTERVAL = 500;
   var KEY_CODE = {
     ESC: 27,
     ENTER: 13,
