@@ -61,6 +61,7 @@ window.preview = (function () {
       if (i <= photo.comments.length - 1) {
         var comment = createComment();
         comment.querySelector('.social__picture').src = photo.comments[i].avatar;
+        comment.querySelector('.social__picture').alt = photo.comments[i].name;
         comment.querySelector('.social__text').textContent = photo.comments[i].message;
         fragment.appendChild(comment);
 

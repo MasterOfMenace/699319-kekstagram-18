@@ -7,8 +7,6 @@
   var popular = filters.querySelector('#filter-popular');
   var random = filters.querySelector('#filter-random');
   var discussed = filters.querySelector('#filter-discussed');
-  // var shuffledData;
-  // var randomData;
 
   function clearPicturesContainer() {
     var pictures = photosContainer.querySelectorAll('.picture');
@@ -31,11 +29,12 @@
 
   function randomButtonClickHandler(evt) {
     var shuffled = window.util.shuffleArray(window.photos.slice(), RANDOM_PHOTOS_COUNT);
-    window.photosData = shuffled;
+    window.photos = shuffled;
     filterPictures(evt, shuffled);
   }
 
   function popularButtonClickHandler(evt) {
+    window.photos = window.photosData;
     filterPictures(evt, window.photos);
   }
 
@@ -43,7 +42,7 @@
     var sorted = window.photos.slice().sort(function (a, b) {
       return b.comments.length - a.comments.length;
     });
-    window.photosData = sorted;
+    window.photos = sorted;
     filterPictures(evt, sorted);
   }
 

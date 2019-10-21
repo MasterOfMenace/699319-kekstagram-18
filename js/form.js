@@ -209,13 +209,14 @@
   // валидация хэштегов
 
   var hashtagsInput = document.querySelector('.text__hashtags');
-  hashtagsInput.addEventListener('change', validationHashtags);
-  hashtagsInput.addEventListener('focus', function () {
-    document.removeEventListener('keydown', formEscPressHandler);
-  });
-  hashtagsInput.addEventListener('blur', function () {
-    document.addEventListener('keydown', formEscPressHandler);
-  });
+
+  function makeBorderRed(element) {
+    element.style.borderColor = 'red';
+  }
+
+  function makeBorderNormal(element) {
+    element.style.borderColor = '';
+  }
 
   function validationHashtags() {
     var hashtags = hashtagsInput.value.split(' ').map(function (elem) {
@@ -230,23 +231,38 @@
       var inkr = i + 1;
       if (firstToken !== '#') {
         hashtagsInput.setCustomValidity('Хэштег должен начинаться с #');
+        makeBorderRed(hashtagsInput);
       } else if (firstToken === '#' && hashtags[i].length === 1) {
         hashtagsInput.setCustomValidity('Хэштег не может состоять из одной решетки');
+        makeBorderRed(hashtagsInput);
       } else if (hashtags[i].length > HASHTAGS_OPTIONS.MAX_LENGTH) {
         hashtagsInput.setCustomValidity('Хэштег не иожет быть длиннее 20 символов, включая решетку');
+        makeBorderRed(hashtagsInput);
       } else if (hashtags.length > HASHTAGS_OPTIONS.MAX_QAUNTITY) {
         hashtagsInput.setCustomValidity('не более 5 хэштегов');
+        makeBorderRed(hashtagsInput);
       } else if (hashtags.indexOf(hashtags[i], inkr) !== -1) {
         hashtagsInput.setCustomValidity('Хэштеги не могут повторяться');
+        makeBorderRed(hashtagsInput);
         break; // если не выйти из цикла, то при проходе до конца скидывается setCustomValidity
       } else if (hashtags[i].indexOf('#', 1) !== -1) {
         hashtagsInput.setCustomValidity('Хэштеги должны разделяться пробелом');
+        makeBorderRed(hashtagsInput);
         break; // если не выйти из цикла, то при проходе до конца скидывается setCustomValidity
       } else {
+        makeBorderNormal(hashtagsInput);
         hashtagsInput.setCustomValidity('');
       }
     }
   }
+
+  hashtagsInput.addEventListener('change', validationHashtags);
+  hashtagsInput.addEventListener('focus', function () {
+    document.removeEventListener('keydown', formEscPressHandler);
+  });
+  hashtagsInput.addEventListener('blur', function () {
+    document.addEventListener('keydown', formEscPressHandler);
+  });
 
   // обработчики на textarea с комментариями
 

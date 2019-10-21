@@ -9,8 +9,8 @@
   function renderPreview(elem) {
     var parent = elem.parentNode;
     var index = Array.prototype.indexOf.call(parent.children, elem) - NOT_PICTURES_NODES;
-    window.preview.renderBigPhoto(window.photosData[index]);
-    window.preview.renderComments(window.photosData[index], START_COMMENTS_COUNT, window.preview.defaultRenderedCommentsCount);
+    window.preview.renderBigPhoto(window.photos[index]);
+    window.preview.renderComments(window.photos[index], START_COMMENTS_COUNT, window.preview.defaultRenderedCommentsCount);
   }
 
   function pictureClickHandler(evt) {
