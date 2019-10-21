@@ -5,19 +5,21 @@ window.preview = (function () {
   var preview = document.querySelector('.big-picture');
   var bigImg = preview.querySelector('.big-picture__img').getElementsByTagName('img')[0];
   var likesCount = document.querySelector('.likes-count');
-  var commentsCount = document.querySelector('.comments-count');
+  var commentsCountElement = document.querySelector('.comments-count');
   var photoDescription = document.querySelector('.social__caption');
   var commentsList = document.querySelector('.social__comments');
   var previewCloseButton = document.querySelector('#picture-cancel');
 
   var commentsLoadButton = document.querySelector('.comments-loader');
   var currentPhoto;
+  var commentsCount = document.querySelectorAll('.social__comment').length;
 
   function closePreview() {
     window.util.hideElement('.big-picture', 'hidden');
     document.removeEventListener('keydown', previewEscPressHandler);
     commentsList.innerHTML = '';
     commentsLoadButton.classList.remove('visually-hidden');
+    commentsCount = 0;
   }
 
   function previewEscPressHandler(evt) {
@@ -28,7 +30,7 @@ window.preview = (function () {
     currentPhoto = photo;
     bigImg.src = photo.url;
     likesCount.textContent = photo.likes;
-    commentsCount.textContent = photo.comments.length;
+    commentsCountElement.textContent = photo.comments.length;
     photoDescription.textContent = photo.description;
     window.util.showElement('.big-picture');
     document.addEventListener('keydown', previewEscPressHandler);
@@ -63,6 +65,7 @@ window.preview = (function () {
         fragment.appendChild(comment);
 
         commentsRendered.textContent = i + 1;
+        commentsCount = commentsCount + 1;
 
         if (i >= photo.comments.length - 1) {
           commentsLoadButton.classList.add('visually-hidden');
@@ -72,10 +75,10 @@ window.preview = (function () {
     commentsList.appendChild(fragment);
   }
 
+
   commentsLoadButton.addEventListener('click', function () {
-    var count = document.querySelectorAll('.social__comment').length;
-    var inkrement = count + DEFAULT_RENDERED_COMMENTS_COUNT;
-    renderComments(currentPhoto, count, inkrement);
+    var inkrement = commentsCount + DEFAULT_RENDERED_COMMENTS_COUNT;
+    renderComments(currentPhoto, commentsCount, inkrement);
   });
 
   previewCloseButton.addEventListener('click', closePreview);

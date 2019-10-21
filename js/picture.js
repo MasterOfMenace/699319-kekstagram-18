@@ -26,6 +26,7 @@ window.picture = (function () {
 
   function onSuccess(data) {
     window.photos = data;
+    window.photosData = data;
     filters.classList.remove('img-filters--inactive');
     renderPhotos(data);
   }
