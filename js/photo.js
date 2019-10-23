@@ -3,11 +3,11 @@
 (function () {
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
   var uploadFile = document.querySelector('#upload-file');
-  var previevImg = document.querySelector('.img-upload__preview').getElementsByTagName('img')[0];
+  var previewImg = document.querySelector('.img-upload__preview').getElementsByTagName('img')[0];
   var effectsPreview = document.querySelectorAll('.effects__preview');
 
   function readerLoadHandler(reader) {
-    previevImg.src = reader.result;
+    previewImg.src = reader.result;
     effectsPreview.forEach(function (effect) {
       effect.style.backgroundImage = 'url(' + reader.result + ')';
     });

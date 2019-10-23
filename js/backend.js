@@ -3,7 +3,7 @@
 window.backend = (function () {
   var XHR_SUCCESS_STATUS = 200;
 
-  function load(url, onSucess, onError) {
+  function load(url, onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -11,7 +11,7 @@ window.backend = (function () {
 
     xhr.addEventListener('load', function () {
       if (xhr.status === XHR_SUCCESS_STATUS) {
-        onSucess(xhr.response);
+        onSuccess(xhr.response);
       } else {
         onError('Статус ответа ' + xhr.status + xhr.statusText);
       }
@@ -19,7 +19,7 @@ window.backend = (function () {
     xhr.send();
   }
 
-  function upload(url, data, onSucess, onError) {
+  function upload(url, data, onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -27,7 +27,7 @@ window.backend = (function () {
 
     xhr.addEventListener('load', function () {
       if (xhr.status === XHR_SUCCESS_STATUS) {
-        onSucess(xhr.response);
+        onSuccess(xhr.response);
       } else {
         onError('Статус ответа ' + xhr.status + xhr.statusText);
       }

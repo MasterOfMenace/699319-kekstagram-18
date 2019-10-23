@@ -19,10 +19,6 @@ window.util = (function () {
     element.classList.add(style);
   }
 
-  function getRandomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
-
   function shuffleArray(array, number) {
     var inputArray = array.slice();
     var outputArray = [];
@@ -61,7 +57,6 @@ window.util = (function () {
     },
     showElement: showElement,
     hideElement: hideElement,
-    getRandomNumber: getRandomNumber,
     shuffleArray: shuffleArray,
   };
 })();
