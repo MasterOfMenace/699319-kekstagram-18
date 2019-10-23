@@ -8,11 +8,15 @@ window.util = (function () {
   };
 
   function showElement(element) {
-    document.querySelector(element).classList.remove('hidden');
+    if (element.classList.contains('hidden')) {
+      element.classList.remove('hidden');
+    } else if (element.classList.contains('visually-hidden')) {
+      element.classList.remove('visually-hidden');
+    }
   }
 
   function hideElement(element, style) {
-    document.querySelector(element).classList.add(style);
+    element.classList.add(style);
   }
 
   function getRandomNumber(min, max) {

@@ -3,7 +3,6 @@
 (function () {
   var NOT_PICTURES_NODES = 2;
   var START_COMMENTS_COUNT = 0;
-  // console.log(window.photos.slice());
   var picturesContainer = document.querySelector('.pictures');
 
   function renderPreview(elem) {
