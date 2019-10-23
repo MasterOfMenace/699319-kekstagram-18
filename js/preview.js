@@ -15,10 +15,10 @@ window.preview = (function () {
   var commentsCount = document.querySelectorAll('.social__comment').length;
 
   function closePreview() {
-    window.util.hideElement('.big-picture', 'hidden');
+    window.util.hideElement(preview, 'hidden');
     document.removeEventListener('keydown', previewEscPressHandler);
     commentsList.innerHTML = '';
-    commentsLoadButton.classList.remove('visually-hidden');
+    window.util.showElement(commentsLoadButton);
     commentsCount = 0;
   }
 
@@ -32,7 +32,7 @@ window.preview = (function () {
     likesCount.textContent = photo.likes;
     commentsCountElement.textContent = photo.comments.length;
     photoDescription.textContent = photo.description;
-    window.util.showElement('.big-picture');
+    window.util.showElement(preview);
     document.addEventListener('keydown', previewEscPressHandler);
   }
 
@@ -61,6 +61,7 @@ window.preview = (function () {
       if (i <= photo.comments.length - 1) {
         var comment = createComment();
         comment.querySelector('.social__picture').src = photo.comments[i].avatar;
+        comment.querySelector('.social__picture').alt = photo.comments[i].name;
         comment.querySelector('.social__text').textContent = photo.comments[i].message;
         fragment.appendChild(comment);
 
@@ -68,7 +69,7 @@ window.preview = (function () {
         commentsCount = commentsCount + 1;
 
         if (i >= photo.comments.length - 1) {
-          commentsLoadButton.classList.add('visually-hidden');
+          window.util.hideElement(commentsLoadButton, 'visually-hidden');
         }
       }
     }
@@ -77,8 +78,8 @@ window.preview = (function () {
 
 
   commentsLoadButton.addEventListener('click', function () {
-    var inkrement = commentsCount + DEFAULT_RENDERED_COMMENTS_COUNT;
-    renderComments(currentPhoto, commentsCount, inkrement);
+    var endCount = commentsCount + DEFAULT_RENDERED_COMMENTS_COUNT;
+    renderComments(currentPhoto, commentsCount, endCount);
   });
 
   previewCloseButton.addEventListener('click', closePreview);
